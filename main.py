@@ -12,7 +12,7 @@ import json
 API_KEY = 'YOUR API KEY'
 API_SECRET = 'YOUR API SECRET'
 
-
+#YO IT'S A COMMENT
 def api_query( method, req = None ):
  if not req:
          req = {}
