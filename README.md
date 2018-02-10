@@ -1,2 +1,2 @@
 # Cryptopia
-Me and Seanardo doin some shizzle
+Me and Seanardo doin some shizzle ye dawggg
