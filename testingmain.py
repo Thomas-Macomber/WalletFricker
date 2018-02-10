@@ -5,7 +5,7 @@
 import time
 import hmac
 import urllib
-import requests
+#import requests
 import hashlib
 import base64
 #is this one a typo? It tries to auto complete
@@ -15,7 +15,7 @@ import json
 #string define for the URL
 urlPub = "https://www.cryptopia.co.nz/api/"
 urlPri = "https://www.cryptopia.co.nz/Api/"
-running = true
+running = 1
 
 #Okay so I don't understand this funftion definition but it seems important (its the main query funct.)
 def api_query (method, req = None ):
@@ -48,22 +48,22 @@ def api_query (method, req = None ):
     #Finishes the pass through with r
     response = r.text
     #Gives you that sweet fucking mail
-    print "You Got Mail!!! " + response
-
+    print ("You Got Mail!!! " + response)
+    return response.replace("false","False").replace("true,","True").replace('":null','":None')
 #Anything we need to run once at the begining of the program
 def setup():
     #Gather the API_KEY and API_SECRET
     API_KEY =  raw_input("Public Key: ")
     API_SECRET = raw_input("Secret Key: ")
     #for debugging, comment out when unneccessary
-    print "Your API_KEY is: ", API_KEY
-    print "Your API_SECRET is: ", API_SECRET
+    print ("Your API_KEY is: ", API_KEY)
+    print ("Your API_SECRET is: ", API_SECRET)
 
 #Anything we want to run indefinitely
 def loop ():
-    print api_query("GetMarket", [4405])
+    print (api_query("GetMarket", [4405, 6]))
 
 #starts the non terminating loop
-while running:
+while running == 1:
     #runs loop (Woah)
     loop()
