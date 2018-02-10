@@ -5,6 +5,7 @@
 import time
 import hmac
 import urllib
+#HTTP for humans
 import requests
 import hashlib
 import base64
@@ -42,12 +43,11 @@ def api_query (method, req = None ):
         r = requests.get( url )
     #Tells the funtion how to handle querys in the private array (with authentications)
     elif method in private_set:
+
         url = urlPri + method
 
         #leaving this blank for a while until I can successfully log the public queries
 
-    #Finishes the pass through with r
-    response = r.text
     #Gives you that sweet fucking mail
     print ("You Got Mail!!! " + response)
     return response.replace("false","False").replace("true,","True").replace('":null','":None')
@@ -62,9 +62,10 @@ def setup():
 
 #Anything we want to run indefinitely
 def loop ():
-    print (api_query("GetMarket"))
+    HUSH = api_query ("GetMarket", 4405)
+    return HUSH
 
 #starts the non terminating loop
-while running == 1:
+#while running == 1:
     #runs loop (Woah)
-    loop()
+loop()
