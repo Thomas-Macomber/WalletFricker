@@ -12,10 +12,10 @@ import json
 API_KEY = 'YOUR API KEY'
 API_SECRET = 'YOUR API SECRET'
 
-#YO IT'S A COMMENT
-def api_query( method, req = None ):
- if not req:
-         req = {}
+
+def api_query(method, req=None):
+    if not req:
+        req = {}
  #print "def api_query( method = " + method + ", req = " + str( req ) + " ):"
  time.sleep( 1 )
  public_set = set([ "GetCurrencies", "GetTradePairs", "GetMarkets", "GetMarket", "GetMarketHistory", "GetMarketOrders" ])
