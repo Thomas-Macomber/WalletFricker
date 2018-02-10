@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+#ITS BRITTNEY BITCH
+
 import time
 import hmac
 import urllib
