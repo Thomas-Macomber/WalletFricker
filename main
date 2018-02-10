@@ -3,7 +3,7 @@
 import time
 import hmac
 import urllib
-import requests
+import request
 import hashlib
 import base64
 import sys
