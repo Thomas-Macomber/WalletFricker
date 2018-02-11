@@ -5,8 +5,8 @@ running = 1
 CryptoHopperName = "We Need a Name"
 version = "Indev 0.0.1"
 last96 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-last15 = []
-lastPrice = "Test"
+last15 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+lastPrice = 0
 
 print("\nScript to find the current information about crypto.\nType 'help' to view valid commands.")
 
@@ -64,7 +64,7 @@ def retrievePrice( pairString ):
     rString = r.text
     pairIndex = rString.find(pairString)
     if(pairIndex != -1):
-        pairLength(len(pairString))
+        pairLength = (len(pairString))
         slicePrice = rString[(pairIndex+117+pairLength):(pairIndex+127+pairLength)]
         return float(slicePrice)
     elif(pairIndex == -1 ):
@@ -127,7 +127,7 @@ def printLogScreen( ticker, lastPrice, SMA, lastBuyPrice, lastBuyQuant, waitBuy,
     print ( "   @ " + sellOut + coin2 )
 
 def set96( pairString ):
-    currentSMA = input( "Please input current market SMA for: " + pairString )
+    currentSMA = input( "Please input current market SMA for: " + pairString + ": ")
     type(currentSMA)
     for i in range( 0, 96 ):
         last96[i] = currentSMA
@@ -138,6 +138,12 @@ def foward96( lastPrice ):
         last96[ i ] = last96 [ i - 1]
     last96[0] = lastPrice
 
+def foward15( lastPrice ):
+    for i in range( 14, 0, -1 ):
+        #print(i)
+        last15[ i ] = last15[ i - 1]
+    last15[0] = lastPrice
+
 
 def log( pairString ):
     counter96 = 0
@@ -145,21 +151,18 @@ def log( pairString ):
     waitSell = 0
     while 1 < 2:
         lastPrice = retrievePrice( pairString )
-        SMA = sum(last96)/float(len(last96))
+        print(lastPrice)
+        foward15( lastPrice )
+        SMA = float(sum(last96))/float(len(last96))
         if counter96 == 29:
             counter96 = 0
-            foward96( lastPrice )
+            foward96( float(sum(last15))/float(len(last15)) )
+        printLogScreen( pairString, lastPrice, SMA, 0, 0, waitBuy, 0, 0, waitSell, 0)
         time.sleep(30)
         counter96 += 1
 
-print( last96 )
 set96( "HUSH/BTC" )
-print( last96 )
-print( len(last96) )
-for i in range(0,100):
-    foward96( lastPrice )
-    print( last96 )
-    print(" ")
+log( "HUSH/BTC" )
 
 
 #LEFTOVER CODE FROM TESTS THIS MORNING
