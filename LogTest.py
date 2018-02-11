@@ -129,15 +129,14 @@ def printLogScreen( ticker, lastPrice, SMA, lastBuyPrice, lastBuyQuant, waitBuy,
 def set96( pairString ):
     currentSMA = input( "Please input current market SMA for: " + pairString )
     type(currentSMA)
-    for i in range( 0, 49 ):
+    for i in range( 0, 96 ):
         last96[i] = currentSMA
 
 def foward96( lastPrice ):
-    for i in range( 48, 0, -1 ):
-        print(i)
-        last96[ i + 1 ] = last96 [ i ]
+    for i in range( 95, 0, -1 ):
+        #print(i)
+        last96[ i ] = last96 [ i - 1]
     last96[0] = lastPrice
-    print( last96 )
 
 
 def log( pairString ):
@@ -157,6 +156,11 @@ print( last96 )
 set96( "HUSH/BTC" )
 print( last96 )
 print( len(last96) )
+for i in range(0,100):
+    foward96( lastPrice )
+    print( last96 )
+    print(" ")
+
 
 #LEFTOVER CODE FROM TESTS THIS MORNING
 #api_query("GetMarket/1262")  #just another request test
