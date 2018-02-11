@@ -29,6 +29,28 @@ def get_market():
     else:
         bot()
 
+def get_markets():
+    pairString = input("\nPlease enter a pair in the format COIN/COIN to see their exchange rate: ")
+    type(pairString)
+    slashIndex = pairString.find("/")
+    coin1 = pairString[:slashIndex]
+    coin2 = pairString[slashIndex+1:]
+    url = "https://www.cryptopia.co.nz/api/GetMarkets"
+    r = requests.get(url)
+    rString = r.text
+    pairIndex = rString.find(pairString)
+    if(pairIndex != -1):
+        pairLength = (len(pairString))
+        slicePrice = rString[(pairIndex+13+pairLength):(pairIndex+23+pairLength)]
+        print("The exchange rate for " + coin1 + " to " + coin2 + " is: " + slicePrice +"\nOr 1 " + coin1 + " to " + slicePrice + " " + coin2)
+    elif(pairIndex == -1):
+        print("The pair: " + pairString + " does not exist.")
+    continueString = input("\nWould you like to input another pair? (y/n): ")
+    type(continueString)
+    if(continueString == "y"):
+        get_markets()
+    else:
+        bot()
 
 #So you can test this out. When running the .bat for this file it should ask for a TradePairId.
 #Inputting the ID should output the ask price for that pair of currencies.
@@ -42,6 +64,8 @@ def bot():
     methodString = input("\nPlease enter a command you would like to use: ")
     if(methodString == "GetMarket"):
         get_market()
+    elif(methodString == "GetMarkets"):
+        get_markets()
     elif(methodString == "help"):
         print("\nCurrent available commands are: \n'help' -Will display this list\n'exit' -Will terminate program\n'GetMarket' -Will retrieve current market asking price for a trade pair")
     elif(methodString == "exit"):
