@@ -2,7 +2,7 @@ import requests
 import sys
 
 running = 1
-print("\nScript to find the current asking price of crypto.\nType 'help' to view valid commands.")
+print("\nScript to find the current information about crypto.\nType 'help' to view valid commands.")
 
 #I'm going to make some changes to the methods. Primary so that we have specific methods for each API command instead
 #of having one large method that does everything. Maybe I'll clean it up later but this is mostly because
