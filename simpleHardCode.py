@@ -62,12 +62,12 @@ def get_markets():
 
 def bot():
     methodString = input("\nPlease enter a command you would like to use: ")
-    if(methodString == "GetMarket"):
+    if(methodString == "GetMarketId"):
         get_market()
-    elif(methodString == "GetMarkets"):
+    elif(methodString == "GetMarketPair"):
         get_markets()
     elif(methodString == "help"):
-        print("\nCurrent available commands are: \n'help' -Will display this list\n'exit' -Will terminate program\n'GetMarket' -Will retrieve current market asking price for a trade pair")
+        print("\nCurrent available commands are: \n'help' -Will display this list\n'exit' -Will terminate program\n'GetMarketId' -Will retrieve current market asking price for a trade pair Id\n'GetMarketPair' -Will retrieve current market asking price for a trade pair ")
     elif(methodString == "exit"):
         sys.exit()
     else:
