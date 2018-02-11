@@ -154,10 +154,17 @@ def log( pairString ):
         lastPrice = retrievePrice( pairString )
         print(lastPrice)
         foward15( lastPrice )
-        SMA = float(sum(last96))/float(len(last96))
+        sum96 = 0
+        for i in range(0,96):
+            sum96 += last96[i]
+        avg96 = float(sum96) / float(len(last96))
         if counter96 == 29:
             counter96 = 0
-            foward96( float(sum(last15))/float(len(last15)) )
+            sum15 = 0
+            for i in range(0,15):
+                sum15 += last15[i]
+            avg15 = float(sum15) / float(len(last15))
+            foward96( sum(last15)/float(15) )
         printLogScreen( pairString, lastPrice, SMA, 0, 0, waitBuy, 0, 0, waitSell, 0)
         time.sleep(30)
         counter96 += 1
