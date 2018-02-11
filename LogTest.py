@@ -4,7 +4,7 @@ import sys
 running = 1
 CryptoHopperName = "We Need a Name"
 version = "Indev 0.0.1"
-last96 = []
+last96 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 last15 = []
 lastPrice = "Test"
 
@@ -130,7 +130,7 @@ def set96( pairString ):
     currentSMA = input( "Please input current market SMA for: " + pairString )
     type(currentSMA)
     for i in range( 0, 49 ):
-        last96.append = currentSMA
+        last96[i] = currentSMA
 
 def foward96( lastPrice ):
     for i in range( 48, 0, -1 ):
