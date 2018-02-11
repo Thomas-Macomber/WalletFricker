@@ -1,5 +1,6 @@
 import requests
 import sys
+import time
 
 running = 1
 CryptoHopperName = "We Need a Name"

@@ -1,2 +1,2 @@
-LogTest.py
+python -u LogTest.py
 Pause
