@@ -40,8 +40,9 @@ def get_markets():
     rString = r.text
     pairIndex = rString.find(pairString)
     if(pairIndex != -1):
-        pairLength = (len(pairString))
-        slicePrice = rString[(pairIndex+117+pairLength):(pairIndex+127+pairLength)]
+        formattedText = rString[pairIndex:pairIndex+200]
+        lastPriceIndex = formattedText.find("LastPrice")
+        slicePrice = formattedText[(lastPriceIndex+11):(lastPriceIndex+20)]
         print("The exchange rate for " + coin1 + " to " + coin2 + " is: " + slicePrice +"\nOr 1 " + coin1 + " to " + slicePrice + " " + coin2)
     elif(pairIndex == -1):
         print("The pair: " + pairString + " does not exist.")

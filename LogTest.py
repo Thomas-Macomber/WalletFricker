@@ -22,13 +22,13 @@ def get_market():
     url = "https://www.cryptopia.co.nz/api/" + "GetMarket/" + tpiString
     r = requests.get(url)
     rString = r.text
-    tpiIndex = rString.find("AskPrice")
-    bidIndex = rString.find("BidPrice")
-    if(tpiIndex != -1):
-        slicePrice = rString[tpiIndex+10:bidIndex-2]
-        print("Current asking price for trade pair " + tpiString + " is: "  + slicePrice)
-    elif(tpiIndex == -1):
-        slicePrice = rString[tpiIndex+60:bidIndex-10]
+    lastIndex = rString.find("LastPrice")
+    buyIndex = rString.find("BuyVolume")
+    if(lastIndex != -1):
+        slicePrice = rString[lastIndex+11:buyIndex-2]
+        print("Last sold price of trade pair " + tpiString + " is: "  + slicePrice)
+    elif(lastIndex == -1):
+        slicePrice = rString[lastIndex+60:buyIndex-10]
         print("TradePairId: " + slicePrice + "does not exist.")
     continueString = input("\nWould you like to input another TradePairId? (y/n): ")
     type(continueString)
@@ -48,8 +48,9 @@ def get_markets():
     rString = r.text
     pairIndex = rString.find(pairString)
     if(pairIndex != -1):
-        pairLength = (len(pairString))
-        slicePrice = rString[(pairIndex+13+pairLength):(pairIndex+23+pairLength)]
+        formattedText = rString[pairIndex:pairIndex+200]
+        lastPriceIndex = formattedText.find("LastPrice")
+        slicePrice = formattedText[(lastPriceIndex+11):(lastPriceIndex+20)]
         print("The exchange rate for " + coin1 + " to " + coin2 + " is: " + slicePrice +"\nOr 1 " + coin1 + " to " + slicePrice + " " + coin2)
     elif(pairIndex == -1):
         print("The pair: " + pairString + " does not exist.")
@@ -62,14 +63,22 @@ def get_markets():
 
 #basically GetMarkets except returns the value to the exterior function rather than printing it
 #MIGHT BE FUCKED UP
+#NAH BRO I FIXED IT NOW. KEEP READING FOR WHY IT DIDN'T WORK OR GO TO THE LAST LINE OF COMMENTS BEFORE RETRIEVE PRICE
+#Now what it does is it takes a string starting at the coin par and goes out 200 characters
+#From there it searches THAT string for the lastprice and gets the price based on that
+#The reason the old method didn't work was because last price is after the volume of coin in their api
+#Because the volume of the coin changes based on the coin it meant that the amount of characters to get to LastPrice from where the pair string was found changed based on the digits in volume
+#This should bypass that and work with any coin combination now
+#Tl;dr I suck at string searching
 def retrievePrice( pairString ):
     url = "https://www.cryptopia.co.nz/api/GetMarkets"
     r = requests.get(url)
     rString = r.text
     pairIndex = rString.find(pairString)
     if(pairIndex != -1):
-        pairLength = (len(pairString))
-        slicePrice = rString[(pairIndex+117+pairLength):(pairIndex+127+pairLength)]
+        formattedText = rString[pairIndex:pairIndex+200]
+        lastPriceIndex = formattedText.find("LastPrice")
+        slicePrice = formattedText[(lastPriceIndex+11):(lastPriceIndex+20)]
         return float(slicePrice)
     elif(pairIndex == -1 ):
         return 0
@@ -209,7 +218,7 @@ def log( pairString ):
         #waits 30 seconds (our current refresh rate)
         time.sleep(30)
 
-log( "HUSH/BTC" )
+log( "ETN/BTC" )
 
 
 #LEFTOVER CODE FROM TESTS THIS MORNING
