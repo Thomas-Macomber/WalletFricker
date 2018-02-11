@@ -6,6 +6,7 @@ CryptoHopperName = "We Need a Name"
 version = "Indev 0.0.1"
 last96 = []
 last15 = []
+lastPrice = "Test"
 
 print("\nScript to find the current information about crypto.\nType 'help' to view valid commands.")
 
@@ -66,7 +67,7 @@ def retrievePrice( pairString ):
         pairLength(len(pairString))
         slicePrice = rString[(pairIndex+117+pairLength):(pairIndex+127+pairLength)]
         return float(slicePrice)
-    elif(pairIndex == -1 )
+    elif(pairIndex == -1 ):
         return 0
 
 
@@ -95,13 +96,13 @@ def printLogScreen( ticker, lastPrice, SMA, lastBuyPrice, lastBuyQuant, waitBuy,
     slashIndex = ticker.find("/")
     coin1 = ticker[:slashIndex]
     coin2 = ticker[slashIndex+1:]
-    if waitBuy = 1:
+    if waitBuy == 1:
         buyIn = lastBuyPrice
         buyQ = lastBuyQuant
         sellOut = "N/A "
         sellQ = "N/A "
         status = "Pending Buy Order"
-    elif waitSell = 1:
+    elif waitSell == 1:
         buyIn = lastBuyPrice
         buyQ = lastBuyQuant
         sellOut = lastSellPrice
@@ -120,13 +121,24 @@ def printLogScreen( ticker, lastPrice, SMA, lastBuyPrice, lastBuyQuant, waitBuy,
     print ( "SMA: " + SMA )
     print ( "Current Market Momentum: " + momentum )
     print ( "ORDER STATUS: " + status )
-    print ( "Buy: " buyQ + coin1 )
-    print ( "   @ " + buyIn + coin2)
+    print ( "Buy: " + buyQ + coin1 )
+    print ( "   @ " + buyIn + coin2 )
     print ( "Sell: " + sellQ + coin1 )
     print ( "   @ " + sellOut + coin2 )
 
-def foward96(lastPrice):
-    for i in range
+def set96( pairString ):
+    currentSMA = input( "Please input current market SMA for: "  pairString )
+    type(currentSMA)
+    for i in range( 0, 49 ):
+        last96[i] = currentSMA
+
+def foward96( lastPrice ):
+    for i in range( 48, 0, -1 ):
+        print(i)
+        last96[ i + 1 ] = last96 [ i ]
+    last96[0] = lastPrice
+    print( last96 )
+
 
 def log( pairString ):
     counter96 = 0
@@ -141,8 +153,9 @@ def log( pairString ):
         time.sleep(30)
         counter96 += 1
 
-
-log("HUSH/BTC")
+print( last96 )
+set96( "HUSH/BTC" )
+print( last96 )
 
 #LEFTOVER CODE FROM TESTS THIS MORNING
 #api_query("GetMarket/1262")  #just another request test
