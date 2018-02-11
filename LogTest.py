@@ -1,6 +1,7 @@
 import requests
 import sys
 import time
+import os
 
 running = 1
 CryptoHopperName = "We Need a Name"
@@ -115,23 +116,23 @@ def printLogScreen( ticker, lastPrice, SMA, lastBuyPrice, lastBuyQuant, waitBuy,
         sellOut = "N/A "
         sellQ = "N/A "
         status = "Scanning Market... "
-    cls()
+    os.system('cls')
     print ( CryptoHopperName + "___" + version )
     print ( "Logging: " + ticker )
-    print ( "Last Price: " + lastPrice )
-    print ( "SMA: " + SMA )
-    print ( "Current Market Momentum: " + momentum )
-    print ( "ORDER STATUS: " + status )
-    print ( "Buy: " + buyQ + coin1 )
-    print ( "   @ " + buyIn + coin2 )
-    print ( "Sell: " + sellQ + coin1 )
-    print ( "   @ " + sellOut + coin2 )
+    print ( "Last Price: " + str(lastPrice) )
+    print ( "SMA: " + str(SMA) )
+    print ( "Current Market Momentum: " + str(momentum) )
+    print ( "ORDER STATUS: " + str(status) )
+    print ( "Buy: " + str(buyQ) + coin1 )
+    print ( "   @ " + str(buyIn) + coin2 )
+    print ( "Sell: " + str(sellQ) + coin1 )
+    print ( "   @ " + str(sellOut) + coin2 )
 
 def set96( pairString ):
     currentSMA = input( "Please input current market SMA for: " + pairString + ": ")
     type(currentSMA)
     for i in range( 0, 96 ):
-        last96[i] = currentSMA
+        last96[i] = float(currentSMA)
 
 def foward96( lastPrice ):
     for i in range( 95, 0, -1 ):
@@ -155,13 +156,13 @@ def log( pairString ):
         print(lastPrice)
         foward15( lastPrice )
         sum96 = 0
-        for i in range(0,96):
+        for i in range(0,len(last96)):
             sum96 += last96[i]
-        avg96 = float(sum96) / float(len(last96))
+        SMA = float(sum96) / float(len(last96))
         if counter96 == 29:
             counter96 = 0
             sum15 = 0
-            for i in range(0,15):
+            for i in range(0,len(last15)):
                 sum15 += last15[i]
             avg15 = float(sum15) / float(len(last15))
             foward96( sum(last15)/float(15) )
