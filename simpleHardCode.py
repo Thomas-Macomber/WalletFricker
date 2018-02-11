@@ -14,13 +14,13 @@ def get_market():
     url = "https://www.cryptopia.co.nz/api/" + "GetMarket/" + tpiString
     r = requests.get(url)
     rString = r.text
-    tpiIndex = rString.find("AskPrice")
-    bidIndex = rString.find("BidPrice")
-    if(tpiIndex != -1):
-        slicePrice = rString[tpiIndex+10:bidIndex-2]
-        print("Current asking price for trade pair " + tpiString + " is: "  + slicePrice)
-    elif(tpiIndex == -1):
-        slicePrice = rString[tpiIndex+60:bidIndex-10]
+    lastIndex = rString.find("LastPrice")
+    buyIndex = rString.find("BuyVolume")
+    if(lastIndex != -1):
+        slicePrice = rString[lastIndex+11:buyIndex-2]
+        print("Last sold price of trade pair " + tpiString + " is: "  + slicePrice)
+    elif(lastIndex == -1):
+        slicePrice = rString[lastIndex+60:buyIndex-10]
         print("TradePairId: " + slicePrice + "does not exist.")
     continueString = input("\nWould you like to input another TradePairId? (y/n): ")
     type(continueString)
@@ -41,7 +41,7 @@ def get_markets():
     pairIndex = rString.find(pairString)
     if(pairIndex != -1):
         pairLength = (len(pairString))
-        slicePrice = rString[(pairIndex+13+pairLength):(pairIndex+23+pairLength)]
+        slicePrice = rString[(pairIndex+117+pairLength):(pairIndex+127+pairLength)]
         print("The exchange rate for " + coin1 + " to " + coin2 + " is: " + slicePrice +"\nOr 1 " + coin1 + " to " + slicePrice + " " + coin2)
     elif(pairIndex == -1):
         print("The pair: " + pairString + " does not exist.")
@@ -67,7 +67,7 @@ def bot():
     elif(methodString == "GetMarketPair"):
         get_markets()
     elif(methodString == "help"):
-        print("\nCurrent available commands are: \n'help' -Will display this list\n'exit' -Will terminate program\n'GetMarketId' -Will retrieve current market asking price for a trade pair Id\n'GetMarketPair' -Will retrieve current market asking price for a trade pair ")
+        print("\nCurrent available commands are: \n'help' -Will display this list\n'exit' -Will terminate program\n'GetMarketId' -Will retrieve current market price for a trade pair Id\n'GetMarketPair' -Will retrieve current market asking price for a trade pair ")
     elif(methodString == "exit"):
         sys.exit()
     else:
