@@ -1,2 +1,0 @@
-simpleHardCode.py
-Pause
