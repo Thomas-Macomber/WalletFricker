@@ -13,4 +13,5 @@ The bot itself is written is python and is currently capable of fetching exchang
 ~~ALL OF THEM~~<br/>
 **.ropeproject folder<br/>__pycache__ folder<br/>LogTest.bat<br/>LogTest.py<br/>simpleHardCode.bat<br/>simpleHardCode.py<br/>**
 <br/>
-Other files are mostly for testing or actually learning how python works so they can be ignored.
+Other files are mostly for testing or actually learning how python works so they can be ignored.<br/>
+~~Definitely don't check our commit comments~~
