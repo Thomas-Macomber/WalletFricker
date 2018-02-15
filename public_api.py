@@ -1,7 +1,16 @@
 import requests
 import sys
 
+running = 1
+
 class public_api:
+
+    def get_currencies():
+        url = "https://www.cryptopia.co.nz/api/" + "GetCurrencies/"
+        r = requests.get(url)
+        rString = r.text
+        print(rString)
+
     def get_market():
         tpiString = input("Please enter the TradePairId you would like to search for: ")
         type(tpiString)
@@ -60,9 +69,14 @@ class public_api:
             public_api.get_market()
         elif(methodString == "GetMarketPair"):
             public_api.get_markets()
+        elif(methodString == "GetCurrencies"):
+            public_api.get_currencies()
         elif(methodString == "help"):
             public_api.help()
         elif(methodString == "exit"):
             sys.exit()
         else:
             print("\nPlease enter a valid command.")
+
+while running == 1:
+    public_api.bot()
