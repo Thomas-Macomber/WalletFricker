@@ -16,6 +16,20 @@ print("\nScript to find the current information about crypto.\nType 'help' to vi
 #of having one large method that does everything. Maybe I'll clean it up later but this is mostly because
 #the one large method last time was fucking everything up. So I'm going to rename this method "api_query" to "get_market"
 
+
+#Added color class. Each variable is a string representation that you need to enter to change the color of text.
+#I made a change to printLogScreen to utilize colors for the first printed line. Feel free to check it to see implementation and run the program.
+class color:
+    RED = "\033[1;31;40m"
+    YELLOW = "\033[1;33;40m"
+    GREEN = "\033[1;32;40m"
+    BLUE = "\033[1;34;40m"
+    PURPLE = "\033[1;35;40m"
+    CYAN = "\033[1;36;40m"
+    BLACK = "\033[1;30;40m"
+    WHITE = "\033[1;37;40m"
+
+
 def get_market():
     tpiString = input("Please enter the TradePairId you would like to search for: ")
     type(tpiString)
@@ -139,7 +153,7 @@ def printLogScreen( ticker, lastPrice, SMA, lastBuyPrice, lastBuyQuant, waitBuy,
     os.system('cls')
 
     #prints the screen
-    print ( CryptoHopperName + "___" + version )
+    print ( color.GREEN + CryptoHopperName + color.WHITE + "___" + color.RED + version + color.WHITE)
     print ( "Logging: " + ticker )
     print ( "Last Price: " + str(lastPrice) )
     print ( "SMA: " + str(SMA) )
