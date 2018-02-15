@@ -1,2 +1,0 @@
-simpleGetLastTest.py
-Pause
