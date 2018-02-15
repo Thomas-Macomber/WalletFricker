@@ -2,12 +2,6 @@ import requests
 import sys
 import time
 import os
-#This has been imported in case you want to call anything from the other file. That way we don't have to rewrite it here.
-#For example if you wanted to call the old get_market function you'd type "public_api.get_market()" and it would call it.
-#Check out simpleHardCode.py to see how the class is set up.
-import public_api
-
-#For the sake of possibly calling functions in other files later I recommend you construct some classes and organize them.
 
 running = 1
 CryptoHopperName = "Wallet Fucker"
@@ -28,27 +22,53 @@ class color:
     BLACK = "\033[1;30;40m"
     WHITE = "\033[1;37;40m"
 
-#basically GetMarkets except returns the value to the exterior function rather than printing it
-#MIGHT BE FUCKED UP
-#NAH BRO I FIXED IT NOW. KEEP READING FOR WHY IT DIDN'T WORK OR GO TO THE LAST LINE OF COMMENTS BEFORE RETRIEVE PRICE
-#Now what it does is it takes a string starting at the coin par and goes out 200 characters
-#From there it searches THAT string for the lastprice and gets the price based on that
-#The reason the old method didn't work was because last price is after the volume of coin in their api
-#Because the volume of the coin changes based on the coin it meant that the amount of characters to get to LastPrice from where the pair string was found changed based on the digits in volume
-#This should bypass that and work with any coin combination now
-#Tl;dr I suck at string searching
-def retrievePrice( pairString ):
-    url = "https://www.cryptopia.co.nz/api/GetMarkets"
-    r = requests.get(url)
-    rString = r.text
-    pairIndex = rString.find(pairString)
-    if(pairIndex != -1):
-        formattedText = rString[pairIndex:pairIndex+200]
-        lastPriceIndex = formattedText.find("LastPrice")
-        slicePrice = formattedText[(lastPriceIndex+11):(lastPriceIndex+20)]
-        return float(slicePrice)
-    elif(pairIndex == -1 ):
+class public_api:
+
+    def get_currencies():
+        url = "https://www.cryptopia.co.nz/api/" + "GetCurrencies/"
+        r = requests.get(url)
+        rString = r.text
+        return rString
+
+    def get_trade_pairs():
+        url = "http://www.cryptopia.co.nz/api/" + "GetTradePairs/"
+        r = requests.get(url)
+        rString = r.text
+        return rString
+
+    def get_market_history():
         return 0
+
+    def get_market_orders():
+        return 0
+
+    def get_market_order_groups():
+        return 0
+
+    def get_market(tpiString):
+        url = "https://www.cryptopia.co.nz/api/" + "GetMarket/" + tpiString
+        r = requests.get(url)
+        rString = r.text
+        lastIndex = rString.find("LastPrice")
+        buyIndex = rString.find("BuyVolume")
+        if(lastIndex != -1):
+            slicePrice = rString[lastIndex+11:buyIndex-2]
+            return float(slicePrice)
+        elif(lastIndex == -1):
+            return 0
+
+    def get_markets(pairString):
+        url = "https://www.cryptopia.co.nz/api/GetMarkets"
+        r = requests.get(url)
+        rString = r.text
+        pairIndex = rString.find(pairString)
+        if(pairIndex != -1):
+            formattedText = rString[pairIndex:pairIndex+200]
+            lastPriceIndex = formattedText.find("LastPrice")
+            slicePrice = formattedText[(lastPriceIndex+11):(lastPriceIndex+20)]
+            return float(slicePrice)
+        elif(pairIndex == -1):
+            return 0
 
 #The main screen print with some basic formatting logic
 def printLogScreen( ticker, lastPrice, SMA, lastBuyPrice, lastBuyQuant, waitBuy, lastSellPrice, lastSellQuant, waitSell, momentum):
@@ -131,7 +151,7 @@ def log( pairString ):
     #Starts the loop of unending refresh
     while 1 < 2:
         #grabs the lastprice
-        lastPrice = retrievePrice( pairString )
+        lastPrice = public_api.get_markets( pairString )
         #moves the 30 values stored in last30 foward by 1 adding in the current price
         foward30( lastPrice )
 
@@ -162,5 +182,7 @@ def log( pairString ):
         counter96 += 1
         #waits 30 seconds (our current refresh rate)
         time.sleep(30)
+
+
 
 log( "ETN/BTC" )
