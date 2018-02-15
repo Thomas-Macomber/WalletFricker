@@ -5,7 +5,7 @@ import os
 #This has been imported in case you want to call anything from the other file. That way we don't have to rewrite it here.
 #For example if you wanted to call the old get_market function you'd type "public_api.get_market()" and it would call it.
 #Check out simpleHardCode.py to see how the class is set up.
-import simpleHardCode
+import public_api
 
 #For the sake of possibly calling functions in other files later I recommend you construct some classes and organize them.
 
