@@ -12,6 +12,7 @@ lastPrice = 0
 
 #Added color class. Each variable is a string representation that you need to enter to change the color of text.
 #I made a change to printLogScreen to utilize colors for the first printed line. Feel free to check it to see implementation and run the program.
+#Note: Colors only seem to work after the program starts looping. It's a little weird.
 class color:
     RED = "\033[1;31;40m"
     YELLOW = "\033[1;33;40m"
@@ -24,15 +25,18 @@ class color:
 
 class public_api:
 
+    url = "https://www.cryptopia.co.nz/api/"
+    coinCounter = 0
+
     def get_currencies():
-        url = "https://www.cryptopia.co.nz/api/" + "GetCurrencies/"
-        r = requests.get(url)
+        methodUrl = public_api.url + "GetCurrencies/"
+        r = requests.get(methodUrl)
         rString = r.text
         return rString
 
     def get_trade_pairs():
-        url = "http://www.cryptopia.co.nz/api/" + "GetTradePairs/"
-        r = requests.get(url)
+        methodUrl = public_api.url + "GetTradePairs/"
+        r = requests.get(methodUrl)
         rString = r.text
         return rString
 
@@ -46,8 +50,8 @@ class public_api:
         return 0
 
     def get_market(tpiString):
-        url = "https://www.cryptopia.co.nz/api/" + "GetMarket/" + tpiString
-        r = requests.get(url)
+        methodUrl = public_api.url + "GetMarket/" + tpiString
+        r = requests.get(methodUrl)
         rString = r.text
         lastIndex = rString.find("LastPrice")
         buyIndex = rString.find("BuyVolume")
@@ -57,18 +61,36 @@ class public_api:
         elif(lastIndex == -1):
             return 0
 
+#Added a bunch of error checking. Basically just checking the coin index to see if they exist, and flipping pairs to retest if the pair exists given the coins exist
     def get_markets(pairString):
-        url = "https://www.cryptopia.co.nz/api/GetMarkets"
-        r = requests.get(url)
+        methodUrl = public_api.url + "GetMarkets/"
+        r = requests.get(methodUrl)
         rString = r.text
         pairIndex = rString.find(pairString)
-        if(pairIndex != -1):
-            formattedText = rString[pairIndex:pairIndex+200]
-            lastPriceIndex = formattedText.find("LastPrice")
-            slicePrice = formattedText[(lastPriceIndex+11):(lastPriceIndex+20)]
-            return float(slicePrice)
-        elif(pairIndex == -1):
-            return 0
+        slashIndex = pairString.find("/")
+        coin1 = pairString[:slashIndex]
+        coin2 = pairString[slashIndex+1:]
+        if(rString.find(coin1) == -1):
+            print(coin1 + " is not currently on this exchange.")
+            startBot()
+        elif(rString.find(coin2) == -1):
+            print(coin2 + " is not currently on this exchange.")
+            startBot()
+        else:
+            if(pairIndex != -1):
+                formattedText = rString[pairIndex:pairIndex+200]
+                lastPriceIndex = formattedText.find("LastPrice")
+                slicePrice = formattedText[(lastPriceIndex+11):(lastPriceIndex+20)]
+                return float(slicePrice)
+            elif(pairIndex == -1):
+                public_api.coinCounter += 1
+                if public_api.coinCounter%2 == 0:
+                    print("Pair does not exist in current market\nPlease enter a different coin pair.")
+                    startBot()
+                else:
+                    print("Pair doesn't exist in current format . . . Flipping for computation\nPlease enter SMA value again.")
+                    newPairString = coin2 + "/" + coin1
+                    log(newPairString)
 
 class private_api:
 
@@ -215,6 +237,10 @@ def log( pairString ):
         #waits 30 seconds (our current refresh rate)
         time.sleep(30)
 
+def startBot():
+    print("\nEnter a coin pair to analyze. E.g. use 'BTC' instead of 'Bitcoin'")
+    coin1 = input("Enter the first coin: ")
+    coin2 = input("Enter the second coin: ")
+    log( coin1 + "/" + coin2 )
 
-
-log( "ETN/BTC" )
+startBot()
