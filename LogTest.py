@@ -70,6 +70,38 @@ class public_api:
         elif(pairIndex == -1):
             return 0
 
+class private_api:
+
+    def get_balance():
+        return 0
+
+    def get_deposit_address():
+        return 0
+
+    def get_open_orders():
+        return 0
+
+    def get_trade_history():
+        return 0
+
+    def get_transactions():
+        return 0
+
+    def submit_trade():
+        return 0
+
+    def cancel_trade():
+        return 0
+
+    def submit_tip():
+        return 0
+
+    def submit_withdraw():
+        return 0
+
+    def submit_transfer():
+        return 0
+
 #The main screen print with some basic formatting logic
 def printLogScreen( ticker, lastPrice, SMA, lastBuyPrice, lastBuyQuant, waitBuy, lastSellPrice, lastSellQuant, waitSell, momentum):
     #defines the coins
