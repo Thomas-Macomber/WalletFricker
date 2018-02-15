@@ -9,7 +9,7 @@ In the words of the man himself:<br/>
 The end goal of this project is to create a bot that will buy and sell cryptocurrency at a profit.<br/>
 The bot itself is written is python and is currently capable of fetching exchange rates for an entered coin pair using Cryptopia's public API.<br/>
 
-### Required files for use
+### Required files for use:
 ~~ALL OF THEM~~<br/>
 **.ropeproject folder<br/>__pycache__ folder<br/>LogTest.bat<br/>LogTest.py<br/>simpleHardCode.bat<br/>simpleHardCode.py<br/>**
 <br/>
