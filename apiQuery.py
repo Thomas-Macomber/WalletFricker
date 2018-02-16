@@ -76,31 +76,7 @@ class public_api:
         methodUrl = public_api.url + "GetMarkets/"
         r = requests.get(methodUrl)
         rString = r.text
-        pairIndex = rString.find(pairString)
-        slashIndex = pairString.find("/")
-        coin1 = pairString[:slashIndex]
-        coin2 = pairString[slashIndex+1:]
-        if(rString.find(coin1) == -1):
-            print(coin1 + " is not currently on this exchange.")
-            startBot()
-        elif(rString.find(coin2) == -1):
-            print(coin2 + " is not currently on this exchange.")
-            startBot()
-        else:
-            if(pairIndex != -1):
-                formattedText = rString[pairIndex:pairIndex+200]
-                lastPriceIndex = formattedText.find("LastPrice")
-                slicePrice = formattedText[(lastPriceIndex+11):(lastPriceIndex+20)]
-                return float(slicePrice)
-            elif(pairIndex == -1):
-                public_api.coinCounter += 1
-                if public_api.coinCounter%2 == 0:
-                    print("Pair does not exist in current market\nPlease enter a different coin pair.")
-                    startBot()
-                else:
-                    print("Pair doesn't exist in current format . . . Flipping for computation\nPlease enter SMA value again.")
-                    newPairString = coin2 + "/" + coin1
-                    log(newPairString)
+        return rString
 
 class private_api:
 

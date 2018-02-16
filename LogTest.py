@@ -15,7 +15,6 @@ lastPrice = 0
 
 #The main screen print with some basic formatting logic
 def printLogScreen( ticker, lastPrice, SMA, lastBuyPrice, lastBuyQuant, waitBuy, lastSellPrice, lastSellQuant, waitSell, momentum):
-    #defines the coins
     slashIndex = ticker.find("/")
     coin1 = ticker[:slashIndex]
     coin2 = ticker[slashIndex+1:]
@@ -43,10 +42,8 @@ def printLogScreen( ticker, lastPrice, SMA, lastBuyPrice, lastBuyQuant, waitBuy,
         sellQ = "N/A "
         status = "Scanning Market... "
 
-    #clear the screen for clean look
     os.system('cls')
 
-    #prints the screen
     header() #defined in global variables, prints the program name and version
     print ( "Logging: " + ticker )
     print ( "Last Price: " + str(lastPrice) )
@@ -79,51 +76,56 @@ def foward30( lastPrice ):
         last30[ i ] = last30[ i - 1]
     last30[0] = lastPrice
 
+def formatMarket(rString, pairString):
+    pairIndex = rString.find(pairString)
+    slashIndex = pairString.find("/")
+    coin1 = pairString[:slashIndex]
+    coin2 = pairString[slashIndex+1:]
+    if(rString.find(coin1) == -1):
+        print(coin1 + " is not currently on this exchange.")
+        startBot()
+    elif(rString.find(coin2) == -1):
+        print(coin2 + " is not currently on this exchange.")
+        startBot()
+    else:
+        if(pairIndex != -1):
+            formattedText = rString[pairIndex:pairIndex+200]
+            lastPriceIndex = formattedText.find("LastPrice")
+            slicePrice = formattedText[(lastPriceIndex+11):(lastPriceIndex+20)]
+            return float(slicePrice)
+        elif(pairIndex == -1):
+            public_api.coinCounter += 1
+            if public_api.coinCounter%2 == 0:
+                print("Pair does not exist in current market\nPlease enter a different coin pair.")
+                startBot()
+            else:
+                print("Pair doesn't exist in current format . . . Flipping for computation\nPlease enter SMA value again.")
+                newPairString = coin2 + "/" + coin1
+                log(newPairString)
+
 #The main log
 def log( pairString ):
-    #The last 96 should only update every 15 minutes, this keeps track of progress
     counter96 = 0
-    #If we're waiting to confirm a buy ORDER
-    #NOT YET IMPLIMENTED
     waitBuy = 0
-    #If we're waiting to confirm a sell ORDER
-    #NOT YET IMPLIMENTED
     waitSell = 0
-    #sets the SMA to give a baseline
     set96( pairString )
-    #Starts the loop of unending refresh
     while 1 < 2:
-        #grabs the lastprice
-        lastPrice = public_api.get_markets( pairString )
-        #moves the 30 values stored in last30 foward by 1 adding in the current price
+        rString = public_api.get_markets( pairString )
+        lastPrice = formatMarket(rString, pairString )
         foward30( lastPrice )
-
-        #refreshes the SMA
         sum96 = 0
         for i in range(0,len(last96)):
             sum96 += last96[i]
         SMA = float(sum96) / float(len(last96))
-
-        #if the counter has hit 29 then we have gone through 30 chunks of 30 seconds (15 min)
-        #this starts an update of last 96, the less precise list over a longer period
         if counter96 == 29:
-            #resets counter
             counter96 = 0
-
-            #averages the last 15 minutes
             sum30 = 0
             for i in range(0,len(last30)):
                 sum30 += last30[i]
             avg30 = float(sum30) / float(len(last30))
-
-            #slaps that bitch into the last96 list
             foward96( avg30 )
-
-        #prints the main screen
         printLogScreen( pairString, lastPrice, SMA, 0, 0, waitBuy, 0, 0, waitSell, 0)
-        #increments the counter
         counter96 += 1
-        #waits 30 seconds (our current refresh rate)
         time.sleep(30)
 
 def startBot():
