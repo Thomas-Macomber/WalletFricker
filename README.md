@@ -11,7 +11,7 @@ The bot itself is written is python and is currently capable of fetching exchang
 
 ### Required files for use:
 ~~ALL OF THEM~~<br/>
-**Actually all of them**
+**Actually all of them<br/>**
 <br/>
 Other files are mostly for testing or actually learning how python works so they can be ignored.<br/>
 ~~Definitely don't check our commit comments~~
