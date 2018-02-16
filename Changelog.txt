@@ -1,6 +1,4 @@
 Indev 0.0.2
-  Added *Currency Menu
-  Added Curriency Menu
   Begun implementation of multiple file structure!!
   Project starting to look more professional!
   ++added apiQuery
@@ -10,6 +8,8 @@ Indev 0.0.2
   ++added GlobalVariables
       further organization
   ++created a stupidly basic wiki page and a team email account
+  ++added *Currency Menu
+  ++added Curriency Menu
 Indev 0.0.1
   Initial set up
   ++added LogTest
