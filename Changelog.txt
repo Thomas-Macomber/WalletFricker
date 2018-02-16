@@ -1,4 +1,6 @@
 Indev 0.0.2
+  Added *Currency Menu
+  Added Curriency Menu
   Begun implementation of multiple file structure!!
   Project starting to look more professional!
   ++added apiQuery
