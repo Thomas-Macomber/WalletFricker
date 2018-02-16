@@ -7,6 +7,7 @@ Indev 0.0.2
       you're reading it
   ++added GlobalVariables
       further organization
+  ++created a stupidly basic wiki page and a team email account
 Indev 0.0.1
   Initial set up
   ++added LogTest
