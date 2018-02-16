@@ -8,6 +8,7 @@ Indev 0.0.2
   ++added GlobalVariables
       further organization
   ++created a stupidly basic wiki page and a team email account
+  --removed Herobrine
 Indev 0.0.1
   Initial set up
   ++added LogTest
@@ -15,3 +16,4 @@ Indev 0.0.1
   ++added simpleHardCodeLoop
   ++added testingmain
   ++added main
+  --removed Herobrine
