@@ -76,7 +76,16 @@ def foward30( lastPrice ):
         last30[ i ] = last30[ i - 1]
     last30[0] = lastPrice
 
-def formatMarket(rString, pairString):
+def formatMarket(rString):
+    lastIndex = rString.find("LastPrice")
+    buyIndex = rString.find("BuyVolume")
+    if(lastIndex != -1):
+        slicePrice = rString[lastIndex+11:buyIndex-2]
+        return float(slicePrice)
+    elif(lastIndex == -1):
+        return None
+
+def formatMarkets(rString, pairString):
     pairIndex = rString.find(pairString)
     slashIndex = pairString.find("/")
     coin1 = pairString[:slashIndex]

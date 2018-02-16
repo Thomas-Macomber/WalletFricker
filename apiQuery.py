@@ -62,13 +62,7 @@ class public_api:
         methodUrl = public_api.url + "GetMarket/" + tpiString
         r = requests.get(methodUrl)
         rString = r.text
-        lastIndex = rString.find("LastPrice")
-        buyIndex = rString.find("BuyVolume")
-        if(lastIndex != -1):
-            slicePrice = rString[lastIndex+11:buyIndex-2]
-            return float(slicePrice)
-        elif(lastIndex == -1):
-            return None
+        return rString
 
 #Returns last price of a coin pair
 #Added a  bunch of error checking. Basically just checking the coin index to see if they exist, and flipping pairs to retest if the pair exists given the coins exist
