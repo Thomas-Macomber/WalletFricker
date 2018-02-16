@@ -1,0 +1,16 @@
+Indev 0.0.2
+  Begun implementation of multiple file structure!!
+  Project starting to look more professional!
+  ++added apiQuery
+      the first file in reorganization structure dedicated to querying
+  ++added changelog
+      you're reading it
+  ++added GlobalVariables
+      further organization
+Indev 0.0.1
+  Initial set up
+  ++added LogTest
+  ++added simpleHardCode
+  ++added simpleHardCodeLoop
+  ++added testingmain
+  ++added main
