@@ -120,7 +120,7 @@ def log( pairString ):
     set96( pairString )
     while 1 < 2:
         rString = public_api.get_markets( pairString )
-        lastPrice = formatMarket(rString, pairString )
+        lastPrice = formatMarkets(rString, pairString )
         foward30( lastPrice )
         sum96 = 0
         for i in range(0,len(last96)):
