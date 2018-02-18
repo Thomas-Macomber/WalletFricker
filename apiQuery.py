@@ -66,7 +66,7 @@ class public_api:
 
 #Returns last price of a coin pair
 #Added a  bunch of error checking. Basically just checking the coin index to see if they exist, and flipping pairs to retest if the pair exists given the coins exist
-    def get_markets(pairString):
+    def get_markets():
         methodUrl = public_api.url + "GetMarkets/"
         r = requests.get(methodUrl)
         rString = r.text

@@ -119,7 +119,7 @@ def log( pairString ):
     waitSell = 0
     set96( pairString )
     while 1 < 2:
-        rString = public_api.get_markets( pairString )
+        rString = public_api.get_markets()
         lastPrice = formatMarkets(rString, pairString )
         foward30( lastPrice )
         sum96 = 0
