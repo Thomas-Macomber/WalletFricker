@@ -18,10 +18,10 @@ def get_markets():
     rString = r.text
     pairIndex = rString.find(pairString)
     if(pairIndex != -1):
-        pairLength = (len(pairString))
-        slicePrice = rString[(pairIndex+117+pairLength):(pairIndex+127+pairLength)]
-        floatPrice = float(slicePrice)
-        print(floatPrice)
+        formattedText = rString[pairIndex:pairIndex+200]
+        lastPriceIndex = formattedText.find("LastPrice")
+        slicePrice = formattedText[(lastPriceIndex+11):(lastPriceIndex+20)]
+        print(slicePrice)
     elif(pairIndex == -1):
         print("The pair: " + pairString + " does not exist.")
 
